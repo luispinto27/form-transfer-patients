@@ -1,0 +1,57 @@
+<header class="step-head">
+  <span class="step-eyebrow"><span class="paso">Paso 6 de 8</span> Insumos</span>
+  <h2 class="step-title">Registro de gasto</h2>
+  <p class="step-sub">Relaciona los insumos y servicios utilizados durante el traslado.</p>
+</header>
+
+<div
+  *ngFor="let fila of filas; let i = index"
+  [formGroup]="fila"
+  class="gasto-card">
+
+  <div class="card-header">
+    <span>Registro {{ i + 1 }}</span>
+    <button
+      mat-icon-button
+      color="warn"
+      type="button"
+      (click)="eliminar(i)"
+      [disabled]="gastos.length === 1"
+      aria-label="Eliminar gasto">
+      <i class="material-icons">delete_outline</i>
+    </button>
+  </div>
+
+  <div class="gasto-grid">
+    <mat-form-field appearance="outline" class="desc">
+      <mat-label>Descripción</mat-label>
+      <input matInput formControlName="descripcion">
+      <mat-error *ngIf="fila.get('descripcion')?.hasError('required')">
+        La descripción es requerida
+      </mat-error>
+      <mat-error *ngIf="fila.get('descripcion')?.hasError('minlength')">
+        La descripción debe tener al menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="cant">
+      <mat-label>Cantidad</mat-label>
+      <input matInput type="number" formControlName="cantidad">
+      <mat-error *ngIf="fila.get('cantidad')?.hasError('required')">
+        La cantidad es requerida
+      </mat-error>
+      <mat-error *ngIf="fila.get('cantidad')?.hasError('min')">
+        La cantidad debe ser mayor a 0
+      </mat-error>
+    </mat-form-field>
+  </div>
+</div>
+
+<button
+  mat-stroked-button
+  color="primary"
+  type="button"
+  class="add-btn"
+  (click)="agregar()">
+  <i class="material-icons">add</i> Agregar gasto
+</button>

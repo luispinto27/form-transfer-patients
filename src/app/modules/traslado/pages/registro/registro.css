@@ -1,0 +1,45 @@
+.actions {
+  margin-top: 36px;
+  padding: 22px 0 30px;
+  border-top: 1px solid var(--amb-line, rgba(0, 0, 0, 0.08));
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+
+.actions:has(button:only-child) {
+  justify-content: flex-end;
+}
+
+.actions button {
+  border-radius: 999px;
+  padding: 12px 30px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  min-height: 48px;
+}
+
+.actions button[mat-raised-button] {
+  box-shadow: 0 6px 16px rgba(0, 105, 116, 0.25);
+}
+
+.actions button:hover {
+  transform: translateY(-1px);
+  transition: transform 0.15s ease;
+}
+
+@media (max-width: 600px) {
+  .actions {
+    flex-direction: column-reverse;
+    gap: 14px;
+    padding-bottom: 24px;
+  }
+
+  .actions button {
+    width: 100%;
+    justify-content: center;
+  }
+}

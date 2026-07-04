@@ -1,0 +1,28 @@
+.sistemas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 10px 12px;
+  margin-bottom: 26px;
+  padding: 20px 22px;
+  border-radius: var(--amb-radius, 16px);
+  background: var(--amb-surface-alt, #f4f8fa);
+  border: 1px solid var(--amb-line, #d6e0e6);
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 📱 Mobile */
+@media (max-width: 600px) {
+  .sistemas-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

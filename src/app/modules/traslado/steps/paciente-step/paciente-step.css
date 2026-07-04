@@ -1,0 +1,30 @@
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+
+.half-width {
+  flex: 1;
+}
+
+.third-width {
+  flex: 0.5;
+}
+
+.actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signature-box {
+  height: 120px;
+  border: 1px dashed #999;
+  margin-bottom: 16px;
+}

@@ -1,0 +1,23 @@
+.firmas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.firma-item {
+  min-width: 0;
+}
+
+@media (max-width: 800px) {
+  .firmas-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.error-message {
+  display: block;
+  color: #d63031;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+}

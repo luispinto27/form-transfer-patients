@@ -1,0 +1,54 @@
+<div class="firma-container" [class.firmado]="firmado">
+  <div class="firma-header">
+    <p class="firma-label">{{ label }}</p>
+    <span class="firma-status" *ngIf="firmado">&#10003; Firmado</span>
+  </div>
+
+  <!-- Mostrar imagen si fue subida -->
+  <div *ngIf="uploadedImage" class="image-preview">
+    <img [src]="uploadedImage" alt="Firma subida" />
+  </div>
+
+  <!-- Canvas para dibujar firma -->
+  <div class="canvas-wrapper" [style.display]="uploadedImage ? 'none' : 'block'">
+    <canvas
+      #canvas
+      class="firma-canvas"
+      (pointerdown)="startDraw($event)"
+      (pointermove)="draw($event)"
+      (pointerup)="endDraw($event)"
+      (pointercancel)="endDraw($event)">
+    </canvas>
+    <span class="canvas-hint" *ngIf="!hasDrawn">Firme aquí</span>
+  </div>
+
+  <!-- Input file oculto -->
+  <input
+    #fileInput
+    type="file"
+    accept="image/*"
+    (change)="onFileSelected($event)"
+    style="display: none" />
+
+  <!-- Botones -->
+  <div class="button-group">
+    <button
+      mat-stroked-button
+      color="primary"
+      type="button"
+      (click)="triggerFileInput()"
+      class="upload-btn">
+      <i class="material-icons">photo_camera</i> Subir imagen
+    </button>
+
+    <button
+      mat-stroked-button
+      color="warn"
+      type="button"
+      [disabled]="!firmado"
+      (click)="limpiar()"
+      class="clear-btn">
+      Limpiar
+    </button>
+  </div>
+</div>

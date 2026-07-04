@@ -1,0 +1,164 @@
+<header class="step-head">
+  <span class="step-eyebrow"><span class="paso">Paso 4 de 8</span> Monitoreo</span>
+  <h2 class="step-title">Signos vitales</h2>
+  <p class="step-sub">Registra una toma por cada control durante el traslado. Agrega tantos registros como necesites.</p>
+</header>
+
+<div
+  *ngFor="let grupo of gruposSignos; let i = index"
+  [formGroup]="grupo"
+  class="signos-card">
+
+  <div class="card-header">
+  <span>Registro {{ i + 1 }}</span>
+    <button
+      mat-icon-button
+      color="warn"
+      type="button"
+      (click)="eliminar(i)"
+      [disabled]="signos.length === 1"
+      aria-label="Eliminar registro">
+      <i class="material-icons">delete_outline</i>
+    </button>
+  </div>
+
+  <div class="signos-grid">
+    <div class="hora-selector-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Hora</mat-label>
+        <mat-select
+          [value]="getHourFromTime(grupo.get('hora')?.value)"
+          (selectionChange)="onHourChange(grupo, $event.value)">
+          <mat-option *ngFor="let hour of hours" [value]="hour">
+            {{ formatNumber(hour) }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="grupo.get('hora')?.hasError('required')">
+          La hora es requerida
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Minutos</mat-label>
+        <mat-select
+          [value]="getMinuteFromTime(grupo.get('hora')?.value)"
+          (selectionChange)="onMinuteChange(grupo, $event.value)">
+          <mat-option *ngFor="let minute of minutes" [value]="minute">
+            {{ formatNumber(minute) }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>TA</mat-label>
+      <input matInput placeholder="130/80" formControlName="ta">
+      <mat-error *ngIf="grupo.get('ta')?.hasError('required')">
+        La TA es requerida
+      </mat-error>
+      <mat-error *ngIf="grupo.get('ta')?.hasError('pattern')">
+        Formato: ##/## (ej: 130/80)
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>FC</mat-label>
+      <input matInput type="number" formControlName="fc">
+      <mat-error *ngIf="grupo.get('fc')?.hasError('required')">
+        FC es requerido
+      </mat-error>
+      <mat-error *ngIf="grupo.get('fc')?.hasError('min')">
+        FC debe ser mayor a 40
+      </mat-error>
+      <mat-error *ngIf="grupo.get('fc')?.hasError('max')">
+        FC debe ser menor a 200
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>FR</mat-label>
+      <input matInput type="number" formControlName="fr">
+      <mat-error *ngIf="grupo.get('fr')?.hasError('required')">
+        FR es requerido
+      </mat-error>
+      <mat-error *ngIf="grupo.get('fr')?.hasError('min')">
+        FR debe ser mayor a 10
+      </mat-error>
+      <mat-error *ngIf="grupo.get('fr')?.hasError('max')">
+        FR debe ser menor a 50
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Temp (°C)</mat-label>
+      <input matInput type="number" step="0.1" formControlName="temperatura">
+      <mat-error *ngIf="grupo.get('temperatura')?.hasError('required')">
+        Temperatura es requerida
+      </mat-error>
+      <mat-error *ngIf="grupo.get('temperatura')?.hasError('min')">
+        Temp debe ser mayor a 35°C
+      </mat-error>
+      <mat-error *ngIf="grupo.get('temperatura')?.hasError('max')">
+        Temp debe ser menor a 42°C
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>GLI</mat-label>
+      <input matInput type="number" formControlName="glicemia">
+      <mat-error *ngIf="grupo.get('glicemia')?.hasError('required')">
+        Glicemia es requerida
+      </mat-error>
+      <mat-error *ngIf="grupo.get('glicemia')?.hasError('min')">
+        Glicemia debe ser mayor a 40
+      </mat-error>
+      <mat-error *ngIf="grupo.get('glicemia')?.hasError('max')">
+        Glicemia debe ser menor a 500
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>SpO₂ (%)</mat-label>
+      <input matInput type="number" formControlName="spo2">
+      <mat-error *ngIf="grupo.get('spo2')?.hasError('required')">
+        SpO₂ es requerido
+      </mat-error>
+      <mat-error *ngIf="grupo.get('spo2')?.hasError('min')">
+        SpO₂ debe ser mayor a 80%
+      </mat-error>
+      <mat-error *ngIf="grupo.get('spo2')?.hasError('max')">
+        SpO₂ debe ser menor o igual a 100%
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Glasgow</mat-label>
+      <input matInput type="number" min="3" max="15" formControlName="glasgow">
+      <mat-error *ngIf="grupo.get('glasgow')?.hasError('required')">
+        Glasgow es requerido
+      </mat-error>
+      <mat-error *ngIf="grupo.get('glasgow')?.hasError('min')">
+        Glasgow debe ser 3 o mayor
+      </mat-error>
+      <mat-error *ngIf="grupo.get('glasgow')?.hasError('max')">
+        Glasgow debe ser 15 o menor
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>DX #2</mat-label>
+      <textarea matInput rows="2" formControlName="dxSecundario"></textarea>
+      <mat-error *ngIf="grupo.get('dxSecundario')?.hasError('required')">
+        El diagnóstico secundario es requerido
+      </mat-error>
+    </mat-form-field>
+  </div>
+</div>
+
+<button
+  mat-stroked-button
+  color="primary"
+  class="add-btn"
+  type="button"
+  (click)="agregar()">
+  <i class="material-icons">add</i> Agregar registro
+</button>

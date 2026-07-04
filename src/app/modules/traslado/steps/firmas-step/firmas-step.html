@@ -1,0 +1,57 @@
+<header class="step-head">
+  <span class="step-eyebrow"><span class="paso">Paso 8 de 8</span> Cierre</span>
+  <h2 class="step-title" data-step-title>Firmas</h2>
+  <p class="step-sub">Cada responsable firma en su recuadro. Puedes dibujar en pantalla o subir una imagen.</p>
+</header>
+
+<div [formGroup]="group" class="firmas-grid">
+  <div class="firma-item">
+    <app-firma-pad
+      label="Firma del Médico"
+      (firmaChange)="group.get('medico')?.setValue($event)">
+    </app-firma-pad>
+    <mat-error *ngIf="group.get('medico')?.hasError('required') && group.get('medico')?.touched" class="error-message">
+      La firma del médico es requerida
+    </mat-error>
+  </div>
+
+  <div class="firma-item">
+    <app-firma-pad
+      label="Firma de Enfermería"
+      (firmaChange)="group.get('enfermeria')?.setValue($event)">
+    </app-firma-pad>
+    <mat-error *ngIf="group.get('enfermeria')?.hasError('required') && group.get('enfermeria')?.touched" class="error-message">
+      La firma de enfermería es requerida
+    </mat-error>
+  </div>
+
+  <div class="firma-item">
+    <app-firma-pad
+      label="Firma del Conductor"
+      (firmaChange)="group.get('conductor')?.setValue($event)">
+    </app-firma-pad>
+    <mat-error *ngIf="group.get('conductor')?.hasError('required') && group.get('conductor')?.touched" class="error-message">
+      La firma del conductor es requerida
+    </mat-error>
+  </div>
+
+  <div class="firma-item">
+    <app-firma-pad
+      label="Firma del Familiar / Responsable"
+      (firmaChange)="group.get('familiar')?.setValue($event)">
+    </app-firma-pad>
+    <mat-error *ngIf="group.get('familiar')?.hasError('required') && group.get('familiar')?.touched" class="error-message">
+      La firma del familiar es requerida
+    </mat-error>
+  </div>
+
+  <div class="firma-item">
+    <app-firma-pad
+      label="Firma de la Entidad Receptora"
+      (firmaChange)="group.get('entidadReceptora')?.setValue($event)">
+    </app-firma-pad>
+    <mat-error *ngIf="group.get('entidadReceptora')?.hasError('required') && group.get('entidadReceptora')?.touched" class="error-message">
+      La firma de la entidad receptora es requerida
+    </mat-error>
+  </div>
+</div>

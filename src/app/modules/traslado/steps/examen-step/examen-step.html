@@ -1,0 +1,39 @@
+<header class="step-head">
+  <span class="step-eyebrow"><span class="paso">Paso 5 de 8</span> Valoración</span>
+  <h2 class="step-title">Examen físico</h2>
+  <p class="step-sub">Marca los sistemas evaluados y describe los hallazgos clínicos.</p>
+</header>
+
+<div [formGroup]="group">
+
+  <!-- Checklist -->
+  <div class="sistemas-grid">
+    <mat-checkbox formControlName="cabeza">Cabeza</mat-checkbox>
+    <mat-checkbox formControlName="ojos">Ojos</mat-checkbox>
+    <mat-checkbox formControlName="orl">ORL</mat-checkbox>
+    <mat-checkbox formControlName="cuello">Cuello</mat-checkbox>
+    <mat-checkbox formControlName="cardiovascular">Cardiovascular</mat-checkbox>
+    <mat-checkbox formControlName="pulmonar">Pulmonar</mat-checkbox>
+    <mat-checkbox formControlName="abdomen">Abdomen</mat-checkbox>
+    <mat-checkbox formControlName="gastrointestinal">Gastrointestinal</mat-checkbox>
+    <mat-checkbox formControlName="genitourinario">Genitourinario</mat-checkbox>
+    <mat-checkbox formControlName="extremidades">Extremidades</mat-checkbox>
+    <mat-checkbox formControlName="neurologico">Neurológico</mat-checkbox>
+    <mat-checkbox formControlName="psiquiatrico">Psiquiátrico</mat-checkbox>
+  </div>
+
+  <!-- Descripción -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Descripción del examen físico</mat-label>
+    <textarea
+      matInput
+      rows="6"
+      placeholder="Descripción clínica del examen físico"
+      formControlName="descripcion">
+    </textarea>
+    <mat-error *ngIf="group.get('descripcion')?.hasError('required')">
+      La descripción del examen físico es requerida
+    </mat-error>
+  </mat-form-field>
+
+</div>

@@ -1,0 +1,114 @@
+<div class="form-shell">
+<mat-stepper
+  #stepper
+  [linear]="true"
+  labelPosition="bottom"
+  orientation="horizontal">
+
+  <mat-step label="Traslado" [stepControl]="trasladoGroup">
+    <app-traslado-step
+      [group]="trasladoGroup"
+      [isSearching]="isSearching"
+      [searchLocked]="searchLocked"
+      [searchError]="searchError"
+      (buscarAutorizacion)="onBuscarAutorizacion($event)">
+    </app-traslado-step>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="nextStep()">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Paciente" [stepControl]="pacienteGroup">
+      <app-paciente-step *ngIf="pacienteGroup" [group]="pacienteGroup">
+  </app-paciente-step>
+
+    <div class="actions">
+      <button mat-button (click)="previousStep()">Atrás</button>
+      <button mat-raised-button color="primary" (click)="nextStep()">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Antecedentes" [stepControl]="antecedentesGroup">
+    <app-antecedentes-step [group]="antecedentesGroup"></app-antecedentes-step>
+
+    <div class="actions">
+      <button mat-button (click)="previousStep()">Atrás</button>
+      <button mat-raised-button color="primary" (click)="nextStep()">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Signos" [stepControl]="signosArray">
+    <app-signos-step
+      [signos]="signosArray"
+      [agregar]="agregarSignoVital.bind(this)"
+      [eliminar]="eliminarSignoVital.bind(this)">
+    </app-signos-step>
+
+    <div class="actions">
+      <button mat-button (click)="previousStep()">Atrás</button>
+      <button mat-raised-button color="primary" (click)="nextStep()">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Examen" [stepControl]="examenGroup">
+    <app-examen-step [group]="examenGroup"></app-examen-step>
+
+    <div class="actions">
+      <button mat-button (click)="previousStep()">Atrás</button>
+      <button mat-raised-button color="primary" (click)="nextStep()">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Gastos" [stepControl]="gastoArray">
+    <app-gasto-step
+      [gastos]="gastoArray"
+      [agregar]="agregarGasto.bind(this)"
+      [eliminar]="eliminarGasto.bind(this)">
+    </app-gasto-step>
+
+    <div class="actions">
+      <button mat-button (click)="previousStep()">Atrás</button>
+      <button mat-raised-button color="primary" (click)="nextStep()">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Conducta" [stepControl]="conductaGroup">
+    <app-conducta-step [group]="conductaGroup"></app-conducta-step>
+
+    <div class="actions">
+      <button mat-button (click)="previousStep()">Atrás</button>
+      <button mat-raised-button color="primary" (click)="nextStep()">
+        Siguiente
+      </button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Firmas" [stepControl]="firmasGroup">
+
+    <ng-container *ngIf="form.get('firmas') as g">
+      <app-firmas-step [group]="firmasGroup"></app-firmas-step>
+    </ng-container>
+
+    <div class="actions">
+      <button mat-button (click)="previousStep()">Atrás</button>
+      <button mat-raised-button color="accent" (click)="finalizar()"> Finalizar </button>
+    </div>
+
+  </mat-step>
+
+
+</mat-stepper>
+</div>

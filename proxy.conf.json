@@ -1,0 +1,7 @@
+{
+  "/index.php": {
+    "target": "https://ambulancia.urlcs.co",
+    "secure": true,
+    "changeOrigin": true
+  }
+}

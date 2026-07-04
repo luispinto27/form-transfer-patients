@@ -1,0 +1,132 @@
+<header class="step-head">
+  <span class="step-eyebrow"><span class="paso">Paso 2 de 8</span> Identificación</span>
+  <h2 class="step-title">Información del paciente</h2>
+  <p class="step-sub">Datos personales, de contacto y motivo del traslado del paciente.</p>
+</header>
+
+<div [formGroup]="group">
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nombre completo del paciente</mat-label>
+    <input matInput formControlName="nombreCompleto">
+    <mat-error *ngIf="group.get('nombreCompleto')?.hasError('required')">
+      El nombre es requerido
+    </mat-error>
+    <mat-error *ngIf="group.get('nombreCompleto')?.hasError('minlength')">
+      El nombre debe tener al menos 3 caracteres
+    </mat-error>
+  </mat-form-field>
+
+  <div class="row">
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Tipo de paciente</mat-label>
+      <input matInput formControlName="tipoDocumento">
+      <mat-error *ngIf="group.get('tipoDocumento')?.hasError('required')">
+        El tipo de documento es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>No. Identificación</mat-label>
+      <input matInput formControlName="numeroDocumento">
+      <mat-error *ngIf="group.get('numeroDocumento')?.hasError('required')">
+        El número de documento es requerido
+      </mat-error>
+      <mat-error *ngIf="group.get('numeroDocumento')?.hasError('minlength')">
+        El número debe tener al menos 5 caracteres
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Sexo</mat-label>
+      <mat-select formControlName="sexo">
+        <mat-option value="F">Femenino</mat-option>
+        <mat-option value="M">Masculino</mat-option>
+        <mat-option value="O">Otro</mat-option>
+      </mat-select>
+      <mat-error *ngIf="group.get('sexo')?.hasError('required')">
+        El sexo es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Edad</mat-label>
+        <input matInput type="number" formControlName="edad">
+        <mat-error *ngIf="group.get('edad')?.hasError('required')">
+          La edad es requerida
+        </mat-error>
+        <mat-error *ngIf="group.get('edad')?.hasError('min')">
+          La edad no puede ser negativa
+        </mat-error>
+        <mat-error *ngIf="group.get('edad')?.hasError('max')">
+          La edad no puede exceder 150 años
+        </mat-error>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Dirección del paciente</mat-label>
+    <input matInput formControlName="direccion">
+    <mat-error *ngIf="group.get('direccion')?.hasError('required')">
+      La dirección es requerida
+    </mat-error>
+  </mat-form-field>
+
+  <div class="row">
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Barrio</mat-label>
+      <input matInput formControlName="barrio">
+      <mat-error *ngIf="group.get('barrio')?.hasError('required')">
+        El barrio es requerido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Ciudad</mat-label>
+      <input matInput formControlName="ciudad">
+      <mat-error *ngIf="group.get('ciudad')?.hasError('required')">
+        La ciudad es requerida
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Teléfono</mat-label>
+    <input matInput type="tel" formControlName="telefono">
+    <mat-error *ngIf="group.get('telefono')?.hasError('required')">
+      El teléfono es requerido
+    </mat-error>
+    <mat-error *ngIf="group.get('telefono')?.hasError('pattern')">
+      El teléfono debe tener entre 7 y 10 dígitos
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Motivo de traslado</mat-label>
+    <textarea
+      matInput
+      rows="6"
+      placeholder="Motivo de traslado"
+      formControlName="motivoTraslado">
+    </textarea>
+    <mat-error *ngIf="group.get('motivoTraslado')?.hasError('required')">
+      El motivo de traslado es requerido
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Tratamientos</mat-label>
+    <textarea
+      matInput
+      rows="6"
+      placeholder="Tratamientos"
+      formControlName="tratamiento">
+    </textarea>
+    <mat-error *ngIf="group.get('tratamiento')?.hasError('required')">
+      El tratamiento es requerido
+    </mat-error>
+  </mat-form-field>
+
+</div>

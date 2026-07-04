@@ -1,0 +1,469 @@
+/* ============================================================
+   Ambulancias 247 — global styles
+   Design tokens are bound to Angular Material's own --mat-sys-*
+   theme variables so custom chrome stays in sync with the
+   Material components (buttons, inputs, stepper).
+   ============================================================ */
+
+:root {
+  /* Semantic colour tokens (teal clinical theme via Material) */
+  --amb-primary:            var(--mat-sys-primary);
+  --amb-on-primary:         var(--mat-sys-on-primary);
+  --amb-primary-container:  var(--mat-sys-primary-container);
+  --amb-on-primary-container: var(--mat-sys-on-primary-container);
+
+  --amb-surface:            var(--mat-sys-surface);
+  --amb-surface-alt:        var(--mat-sys-surface-container-low);
+  --amb-surface-inset:      var(--mat-sys-surface-container);
+  --amb-ink:                var(--mat-sys-on-surface);
+  --amb-muted:              var(--mat-sys-on-surface-variant);
+  --amb-line:               var(--mat-sys-outline-variant);
+
+  /* Soft teal glow for focus rings / selected states (the cyan palette's
+     own "container" tone is too electric to use for large surfaces). */
+  --amb-ring:               color-mix(in srgb, var(--amb-primary) 24%, transparent);
+  --amb-tint:               color-mix(in srgb, var(--amb-primary) 10%, var(--amb-surface));
+
+  /* Emergency red — reserved for "Traslado Fallido" & destructive actions */
+  --amb-emergency:          #d92d20;
+  --amb-emergency-bg:       #fdeceb;
+  --amb-success:            #1f9d57;
+  --amb-success-bg:         #e6f5ec;
+
+  --amb-radius:     16px;
+  --amb-radius-sm:  12px;
+  --amb-shadow-sm:  0 1px 2px rgba(16, 44, 54, .06);
+  --amb-shadow:     0 2px 4px rgba(16, 44, 54, .05), 0 14px 34px rgba(16, 44, 54, .09);
+
+  --amb-font-display: "Archivo", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+}
+
+/* Clinical mist background instead of flat white */
+body {
+  background-color: var(--mat-sys-surface-container) !important;
+  color: var(--amb-ink);
+}
+
+/* ---------- Page header (logo + titles, above app-root) ---------- */
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 40px auto 26px;
+  padding: 0 16px;
+}
+.logo {
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+  border-radius: 22px;
+  padding: 10px;
+  background: var(--amb-surface);
+  border: 1px solid var(--amb-line);
+  box-shadow: 0 6px 18px rgba(16, 44, 54, 0.10);
+  margin: 0;
+}
+.main-title {
+  font-family: var(--amb-font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  margin: 0;
+  text-align: center;
+  color: var(--amb-ink);
+}
+.subtitle {
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  color: var(--amb-muted);
+  margin: 0;
+  text-align: center;
+}
+
+/* ---------- Reusable step header (eyebrow → title → context) ---------- */
+.step-head {
+  margin: 4px 0 26px;
+}
+.step-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--amb-primary);
+  margin-bottom: 10px;
+}
+.step-eyebrow .paso {
+  background: var(--amb-primary);
+  color: var(--amb-on-primary);
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.6px;
+}
+.step-head .step-title {
+  font-family: var(--amb-font-display);
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+  line-height: 1.15;
+  margin: 0 0 6px;
+  color: var(--amb-ink);
+  text-wrap: balance;
+}
+.step-sub {
+  font-size: 0.92rem;
+  color: var(--amb-muted);
+  margin: 0;
+  max-width: 62ch;
+  line-height: 1.5;
+}
+
+/* Legacy plain <h3> titles kept in sync visually if any remain */
+app-registro h3 {
+  font-family: var(--amb-font-display);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--amb-ink);
+}
+
+/* ---------- Form fields ---------- */
+mat-form-field {
+  margin-bottom: 6px;
+  display: block;
+}
+mat-form-field.mat-form-field-appearance-outline {
+  margin-bottom: 6px;
+}
+textarea {
+  margin-bottom: 0;
+}
+mat-select {
+  margin-bottom: 0;
+}
+
+/* ---------- Checkboxes ---------- */
+mat-checkbox {
+  margin-right: 12px;
+}
+
+/* ---------- Section panel (checkbox groups: antecedentes / examen) ---------- */
+.panel-block {
+  background: var(--amb-surface-alt);
+  border: 1px solid var(--amb-line);
+  border-radius: var(--amb-radius);
+  padding: 20px 22px;
+}
+.panel-caption {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--amb-muted);
+  margin-bottom: 14px;
+}
+
+/* ---------- Document card that frames the whole form ---------- */
+.form-shell {
+  max-width: 940px;
+  margin: 0 auto 64px;
+  background: var(--amb-surface);
+  border: 1px solid var(--amb-line);
+  border-radius: 24px;
+  box-shadow: var(--amb-shadow);
+  overflow: hidden;
+  position: relative;
+}
+/* Slim clinical accent along the top of the card */
+.form-shell::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--amb-primary), var(--mat-sys-tertiary, var(--amb-primary)));
+  z-index: 3;
+}
+
+/* Stepper sits flush inside the card */
+.form-shell .mat-stepper-horizontal,
+.form-shell .mat-stepper-vertical {
+  background: transparent;
+  font-family: inherit;
+}
+
+/* --- Progress header (horizontal) --- */
+.form-shell .mat-horizontal-stepper-header-container {
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid var(--amb-line);
+  background: var(--amb-surface-alt);
+}
+.form-shell .mat-horizontal-stepper-header {
+  height: auto;
+  min-height: 72px;
+  padding: 6px 4px;
+}
+/* Labels sit under each bead and show in full (wrap instead of clip) */
+.form-shell .mat-step-label {
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  font-size: 0.72rem;
+  text-align: center;
+  line-height: 1.15;
+  white-space: normal;
+  max-width: 92px;
+  margin-top: 6px;
+}
+.form-shell .mat-step-text-label {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+.form-shell .mat-step-label-selected {
+  font-weight: 700;
+}
+/* Step beads */
+.form-shell .mat-step-icon {
+  width: 30px;
+  height: 30px;
+  background: var(--amb-surface-inset);
+  color: var(--amb-muted);
+}
+.form-shell .mat-step-icon-selected,
+.form-shell .mat-step-icon-state-done,
+.form-shell .mat-step-icon-state-edit {
+  background: var(--amb-primary);
+  color: var(--amb-on-primary);
+}
+.form-shell .mat-step-icon-selected {
+  box-shadow: 0 0 0 4px var(--amb-ring);
+}
+.form-shell .mat-stepper-horizontal-line {
+  border-top-color: var(--amb-line);
+  margin: 0 -6px;
+}
+
+/* Content area padding — applied to the single wrapper, NOT each panel.
+   (Material keeps all panels in the DOM and collapses inactive ones to
+   height:0; padding on the panel itself would inflate every hidden one.) */
+.form-shell .mat-horizontal-content-container {
+  padding: 30px 34px 4px;
+}
+.form-shell .mat-horizontal-stepper-content {
+  padding: 0;
+}
+
+/* --- Vertical (mobile) --- */
+.form-shell .mat-vertical-stepper-header {
+  padding: 18px 20px;
+}
+.form-shell .mat-vertical-content-container {
+  margin-left: 30px;
+}
+.form-shell .mat-vertical-content {
+  padding: 0 20px 20px 8px;
+}
+
+@media (max-width: 600px) {
+  .form-shell {
+    border-radius: 18px;
+  }
+  .form-shell .mat-horizontal-content-container {
+    padding: 24px 18px 4px;
+  }
+}
+
+/* ---------- Stepper container ---------- */
+mat-step {
+  padding: 0;
+}
+
+/* ---------- Dialogs (unchanged behaviour) ---------- */
+.mat-mdc-dialog-container {
+  padding: 20px;
+}
+.shared-dialog-panel {
+  padding: 0;
+  border-radius: 16px;
+  box-sizing: border-box;
+  background: var(--amb-surface);
+  max-width: 92vw;
+  box-shadow: var(--amb-shadow);
+  overflow: visible;
+}
+.shared-dialog-panel .mat-mdc-dialog-container {
+  background: transparent;
+  padding: 0;
+}
+.shared-dialog-panel .mat-mdc-dialog-container .primary-button {
+  min-width: 120px;
+  border-radius: 999px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Material icon ligatures used inline in buttons */
+.material-icons {
+  font-size: 20px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* ---------- Authorization "Buscar" button ---------- */
+.buscar-btn {
+  border-radius: 999px !important;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+/* Soft teal-tinted disabled state instead of a flat grey slab */
+.buscar-btn:disabled,
+.buscar-btn.mat-mdc-button-disabled {
+  background-color: var(--amb-tint) !important;
+  color: var(--amb-muted) !important;
+  opacity: 1 !important;
+}
+
+/* ============================================================
+   Responsive — phones & tablets
+   The step components all share .row / .half-width / .full-width
+   but none set flex-direction, so stacking them here (global,
+   unscoped) reaches every step without specificity conflicts.
+   ============================================================ */
+
+/* Tablets & phones: the 8-step rail becomes a swipeable strip so every
+   step stays visible and reachable instead of being crushed or hidden. */
+@media (max-width: 840px) {
+  .form-shell {
+    margin-bottom: 40px;
+  }
+  .step-head .step-title {
+    font-size: 1.5rem;
+  }
+
+  .form-shell .mat-horizontal-stepper-header-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 14px 14px 10px;
+  }
+  .form-shell .mat-horizontal-stepper-header-container::-webkit-scrollbar {
+    display: none;
+  }
+  .form-shell .mat-horizontal-stepper-header {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+  }
+  /* Keep the connectors from collapsing so the row overflows and scrolls */
+  .form-shell .mat-stepper-horizontal-line {
+    flex: 0 0 22px;
+    min-width: 22px;
+    margin: 0;
+  }
+  .form-shell .mat-step-label {
+    max-width: 78px;
+    font-size: 0.68rem;
+  }
+}
+
+/* Phones: stack columns, full-width controls, compact chrome */
+@media (max-width: 600px) {
+  body {
+    padding: 0 12px 48px;
+  }
+
+  /* Two-column field rows become single column */
+  .row {
+    flex-direction: column;
+    margin-bottom: 0 !important;
+  }
+  .half-width,
+  .third-width {
+    width: 100%;
+  }
+
+  /* Authorization search: input above a full-width button.
+     !important overrides the component-scoped `.autorizacion-row`
+     (align-items: center) so children stretch to full width. */
+  .autorizacion-row {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .autorizacion-field {
+    width: 100%;
+    flex: none !important;
+  }
+  .buscar-btn {
+    width: 100%;
+    height: 56px !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* Tighter vertical rhythm so there's less scrolling on a phone */
+  mat-form-field {
+    margin-bottom: 2px;
+  }
+  .full-width {
+    margin-bottom: 10px !important;
+  }
+  .hora-selector,
+  .hora-selector-container {
+    margin-bottom: 8px;
+  }
+
+  /* Page header */
+  .header-container {
+    margin: 24px auto 16px;
+  }
+  .logo {
+    width: 64px;
+    height: 64px;
+  }
+  .main-title {
+    font-size: 1.5rem;
+  }
+  .subtitle {
+    font-size: 0.85rem;
+  }
+
+  /* Step header */
+  .step-head {
+    margin-bottom: 20px;
+  }
+  .step-head .step-title {
+    font-size: 1.35rem;
+  }
+  .step-sub {
+    font-size: 0.88rem;
+  }
+
+  /* Vertical stepper: trim the deep left indent on small screens */
+  .form-shell .mat-vertical-stepper-header {
+    padding: 16px 14px;
+  }
+  .form-shell .mat-vertical-content-container {
+    margin-left: 20px;
+  }
+  .form-shell .mat-vertical-content {
+    padding: 0 6px 18px 14px;
+  }
+}
+
+/* Very small phones: give vitals inputs room to breathe */
+@media (max-width: 380px) {
+  .signos-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .hora-selector-container {
+    grid-column: 1 / -1 !important;
+  }
+}

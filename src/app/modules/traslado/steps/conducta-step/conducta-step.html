@@ -1,0 +1,81 @@
+<div [formGroup]="group">
+
+  <header class="step-head">
+    <span class="step-eyebrow"><span class="paso">Paso 7 de 8</span> Cierre clínico</span>
+    <h2 class="step-title">Conducta y entrega</h2>
+    <p class="step-sub">Describe la conducta seguida y registra los tiempos de entrega del paciente.</p>
+  </header>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Conducta</mat-label>
+    <textarea matInput formControlName="conducta"></textarea>
+    <mat-error *ngIf="group.get('conducta')?.hasError('required')">
+      La conducta es requerida
+    </mat-error>
+  </mat-form-field>
+
+  <h3>Entrega del paciente</h3>
+
+  <div class="hora-container-label">
+    <label>Hora inicio espera</label>
+  </div>
+  <div class="hora-selector">
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Hora</mat-label>
+      <mat-select
+        [value]="getHourFromTime(group.get('horaInicioEspera')?.value)"
+        (selectionChange)="onHourChange('horaInicioEspera', $event.value)">
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+          {{ formatNumber(hour) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Minutos</mat-label>
+      <mat-select
+        [value]="getMinuteFromTime(group.get('horaInicioEspera')?.value)"
+        (selectionChange)="onMinuteChange('horaInicioEspera', $event.value)">
+        <mat-option *ngFor="let minute of minutes" [value]="minute">
+          {{ formatNumber(minute) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-error *ngIf="group.get('horaInicioEspera')?.hasError('required')" class="hora-error">
+    La hora de inicio es requerida
+  </mat-error>
+
+  <div class="hora-container-label">
+    <label>Hora fin espera</label>
+  </div>
+  <div class="hora-selector">
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Hora</mat-label>
+      <mat-select
+        [value]="getHourFromTime(group.get('horaFinEspera')?.value)"
+        (selectionChange)="onHourChange('horaFinEspera', $event.value)">
+        <mat-option *ngFor="let hour of hours" [value]="hour">
+          {{ formatNumber(hour) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="half-width">
+      <mat-label>Minutos</mat-label>
+      <mat-select
+        [value]="getMinuteFromTime(group.get('horaFinEspera')?.value)"
+        (selectionChange)="onMinuteChange('horaFinEspera', $event.value)">
+        <mat-option *ngFor="let minute of minutes" [value]="minute">
+          {{ formatNumber(minute) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-error *ngIf="group.get('horaFinEspera')?.hasError('required')" class="hora-error">
+    La hora de finalización es requerida
+  </mat-error>
+
+  <mat-checkbox formControlName="estadoEntrega">
+    Estado del paciente al momento de la entrega
+  </mat-checkbox>
+
+</div>

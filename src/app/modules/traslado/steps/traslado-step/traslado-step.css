@@ -1,0 +1,90 @@
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.autorizacion-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.autorizacion-field {
+  flex: 1;
+}
+
+.buscar-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  height: 56px;
+  margin-bottom: 22px;
+}
+
+.search-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #f44336;
+  font-size: 13px;
+  margin-bottom: 16px;
+  margin-top: -8px;
+}
+
+.search-error mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 8px;
+}
+
+.half-width {
+  flex: 1;
+}
+
+.hora-selector {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.hora-selector mat-form-field {
+  flex: 1;
+}
+
+.hora-container-label {
+  margin-bottom: 8px;
+}
+
+.hora-container-label label {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  font-weight: 500;
+}
+
+.hora-error {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.signature-box {
+  height: 120px;
+  border: 1px dashed #999;
+  margin-bottom: 16px;
+}
