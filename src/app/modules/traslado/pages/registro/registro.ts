@@ -1,8 +1,8 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { switchMap } from 'rxjs';
+import { switchMap, timeout } from 'rxjs';
 import { Router } from '@angular/router';
 import { ServicioService, ServicioResponse } from '../../../../services/servicio.service';
 import { PdfService, GeneratePdfResponse } from '../../../../services/generar-pdf';
@@ -74,7 +74,8 @@ import { SuccessDialog } from '../../components/success-dialog/success-dialog';
       private readonly pdfService: PdfService,
       private readonly dialog: MatDialog,
       private readonly auth: AuthService,
-      private readonly router: Router
+      private readonly router: Router,
+      private readonly cdr: ChangeDetectorRef
     ) {
 
       const today = new Date().toISOString().split('T')[0];
@@ -653,28 +654,58 @@ import { SuccessDialog } from '../../components/success-dialog/success-dialog';
     onBuscarAutorizacion(autorizacion: string): void {
       this.isSearching = true;
       this.searchError = null;
-      this.servicioService.buscarServicio(autorizacion).subscribe({
+      // Zoneless app: manually flag for change detection so the button reflects
+      // the loading state (there is no zone.js to schedule a CD tick for us).
+      this.cdr.markForCheck();
+
+      this.servicioService.buscarServicio(autorizacion).pipe(
+        // Safety net: never let the button spin forever if the request stalls.
+        timeout(20000)
+      ).subscribe({
         next: (servicio: ServicioResponse) => {
           this.isSearching = false;
           this.searchError = null;
           this.llenarFormularioConServicio(servicio);
           this.searchLocked = true;
+          this.cdr.markForCheck();
         },
         error: (err) => {
           this.isSearching = false;
           this.searchLocked = false;
-          const status = err?.status;
-          if (status === 404) {
-            this.searchError = 'No se encontró ningún servicio con ese número de autorización.';
-          } else if (status === 401) {
-            this.searchError = 'No autorizado. Por favor intente nuevamente o contacte al administrador.';
-          } else if (status === 0) {
-            this.searchError = 'No se pudo conectar con el servidor. Verifique su conexión.';
-          } else {
-            this.searchError = 'Ocurrió un error al buscar el servicio. Intente de nuevo.';
-          }
+          this.searchError = this.mapSearchError(err);
+          this.cdr.markForCheck();
         }
       });
+    }
+
+    /** Turn an HTTP/timeout error into a user-facing message. */
+    private mapSearchError(err: any): string {
+      // rxjs `timeout` operator throws a TimeoutError (no HTTP status).
+      if (err?.name === 'TimeoutError') {
+        return 'La búsqueda tardó demasiado. Verifique su conexión e intente de nuevo.';
+      }
+
+      const status = err?.status;
+      // The legacy PHP API returns the business result in the JSON body
+      // ({ ok, codigo, mensaje }); prefer its message when present.
+      const mensaje: string | undefined = err?.error?.mensaje;
+
+      switch (status) {
+        case 400:
+          return mensaje || 'El número de autorización no es válido.';
+        case 401:
+        case 403:
+          return 'No autorizado. Por favor intente nuevamente o contacte al administrador.';
+        case 404:
+          return mensaje || 'No se encontró ningún servicio con ese número de autorización.';
+        case 0:
+          return 'No se pudo conectar con el servidor. Verifique su conexión.';
+        default:
+          if (typeof status === 'number' && status >= 500) {
+            return 'El servidor no está disponible en este momento. Intente más tarde.';
+          }
+          return mensaje || 'Ocurrió un error al buscar el servicio. Intente de nuevo.';
+      }
     }
 
     private llenarFormularioConServicio(servicio: ServicioResponse): void {

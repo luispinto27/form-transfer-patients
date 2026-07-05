@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/index.php",
+      "destination": "https://ambulancia.urlcs.co/index.php"
+    }
+  ]
+}
