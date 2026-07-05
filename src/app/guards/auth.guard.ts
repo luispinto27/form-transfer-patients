@@ -20,3 +20,18 @@ export const authGuard: CanActivateFn = () => {
 
   return auth.isLoggedIn() ? true : router.createUrlTree(['/login']);
 };
+
+/**
+ * Redirects a signed-in user away from the login page and back to the form.
+ */
+export const loginGuard: CanActivateFn = () => {
+  const platformId = inject(PLATFORM_ID);
+  if (!isPlatformBrowser(platformId)) {
+    return true;
+  }
+
+  const auth = inject(AuthService);
+  const router = inject(Router);
+
+  return auth.isLoggedIn() ? router.createUrlTree(['/registro']) : true;
+};
