@@ -53,6 +53,32 @@ body {
   margin: 40px auto 26px;
   padding: 0 16px;
 }
+/* Logout — its own toolbar row at the top of the form card, button right-aligned */
+.form-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 24px 14px;
+  position: relative;
+  z-index: 4;
+}
+.logout-btn {
+  border-radius: 999px !important;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--amb-primary) !important;
+}
+.logout-btn .material-icons,
+.logout-btn mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  margin-right: 2px;
+}
+@media (max-width: 600px) {
+  .form-toolbar {
+    padding: 14px 14px 10px;
+  }
+}
 .logo {
   width: 84px;
   height: 84px;

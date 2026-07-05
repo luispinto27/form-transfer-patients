@@ -3,13 +3,16 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { switchMap } from 'rxjs';
+import { Router } from '@angular/router';
 import { ServicioService, ServicioResponse } from '../../../../services/servicio.service';
 import { PdfService, GeneratePdfResponse } from '../../../../services/generar-pdf';
+import { AuthService } from '../../../../services/auth.service';
 import { FIELDS_TO_TOGGLE_VALIDATORS, FIELD_LABELS, FORM_FIELD_VALIDATORS, SIGNOS_FIELD_VALIDATORS, GASTO_FIELD_VALIDATORS } from '../../../../constants/form-fields.constants';
 
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 // Step components
 import { TrasladoStep } from '../../steps/traslado-step/traslado-step';
@@ -31,6 +34,7 @@ import { SuccessDialog } from '../../components/success-dialog/success-dialog';
     ReactiveFormsModule,
     MatStepperModule,
     MatButtonModule,
+    MatIconModule,
     MatDialogModule,
     // Steps
     TrasladoStep,
@@ -68,7 +72,9 @@ import { SuccessDialog } from '../../components/success-dialog/success-dialog';
       private readonly breakpointObserver: BreakpointObserver,
       private readonly servicioService: ServicioService,
       private readonly pdfService: PdfService,
-      private readonly dialog: MatDialog
+      private readonly dialog: MatDialog,
+      private readonly auth: AuthService,
+      private readonly router: Router
     ) {
 
       const today = new Date().toISOString().split('T')[0];
@@ -576,6 +582,11 @@ import { SuccessDialog } from '../../components/success-dialog/success-dialog';
       }
     }
 
+    logout(): void {
+      this.auth.logout();
+      this.router.navigate(['/login']);
+    }
+
     nextStep(): void {
       const index = this.stepper?.selectedIndex ?? 0;
       const control = this.getStepControl(index);
@@ -600,7 +611,11 @@ import { SuccessDialog } from '../../components/success-dialog/success-dialog';
 
     private scrollToTop(): void {
       setTimeout(() => {
-        this.stepperRef?.nativeElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Move the whole page back to the top so every step change lands the
+        // user at the header/first field instead of mid-scroll.
+        if (typeof window !== 'undefined') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
         this.scrollActiveStepIntoView();
       }, 120);
     }

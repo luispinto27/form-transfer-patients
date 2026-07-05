@@ -1,0 +1,58 @@
+<div class="login-page">
+  <section class="login-shell" aria-labelledby="login-title">
+
+    <!-- Signature: a live ECG trace that beats across the top of the card -->
+    <div class="ecg" aria-hidden="true">
+      <svg viewBox="0 0 600 60" preserveAspectRatio="none" class="ecg-svg">
+        <polyline
+          points="0,30 90,30 120,30 135,12 150,48 168,30 240,30 270,30 300,4 320,56 345,30 420,30 450,30 465,18 480,42 498,30 600,30"
+          class="ecg-line" />
+      </svg>
+    </div>
+
+    <header class="login-head">
+      <img src="logo-ambulancias-247.ico" alt="Ambulancias 247" class="login-logo">
+      <span class="login-eyebrow">Personal autorizado</span>
+      <h1 id="login-title" class="login-title">Iniciar sesión</h1>
+      <p class="login-sub">Accede para registrar y consultar traslados de pacientes.</p>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form" novalidate>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Usuario</mat-label>
+        <input matInput id="txtusuario" formControlName="usuario" autocomplete="username" autocapitalize="none">
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <mat-error *ngIf="form.get('usuario')?.hasError('required')">
+          Ingresa tu usuario
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput [type]="hidePassword() ? 'password' : 'text'"
+          formControlName="password" autocomplete="current-password">
+        <mat-icon matPrefix>lock_outline</mat-icon>
+        <button mat-icon-button matSuffix type="button" (click)="togglePassword()"
+          [attr.aria-label]="hidePassword() ? 'Mostrar contraseña' : 'Ocultar contraseña'"
+          [attr.aria-pressed]="!hidePassword()">
+          <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+          Ingresa tu contraseña
+        </mat-error>
+      </mat-form-field>
+
+      <div class="login-error" *ngIf="loginError()">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ loginError() }}</span>
+      </div>
+
+      <button mat-raised-button color="primary" type="submit" class="login-btn">
+        <span>Ingresar</span>
+      </button>
+    </form>
+
+    <p class="login-foot">Ambulancias Contacto 247 S.A.S · Atención prehospitalaria</p>
+  </section>
+</div>

@@ -1,4 +1,16 @@
+<div class="header-container">
+  <img src="logo-ambulancias-247.ico" alt="Logo" class="logo">
+  <div class="main-title">Registro de Traslados</div>
+  <div class="subtitle">Ambulancias Contacto 247 S.A.S</div>
+</div>
+
 <div class="form-shell">
+<div class="form-toolbar">
+  <button mat-stroked-button type="button" class="logout-btn" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    Cerrar sesión
+  </button>
+</div>
 <mat-stepper
   #stepper
   [linear]="true"
